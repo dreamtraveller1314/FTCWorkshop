@@ -19,4 +19,8 @@ public class MotorMechanism {
         double output = input/2;
         return output;
     }
+
+    public void setZeroBehavior (DcMotor.ZeroPowerBehavior zerobehavior){
+        motor.setZeroPowerBehavior(zerobehavior);
+    }
 }
