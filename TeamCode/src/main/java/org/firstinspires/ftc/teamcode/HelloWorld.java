@@ -11,7 +11,7 @@ public class HelloWorld extends OpMode {
     public void init() {
         telemetry.addData("Hello","World");
         int teamNumber = 23014;
-        double motorSpeed = 0.75;
+        double motorSpeed = 0.75; //change value here
         boolean clawClosed = true;
         String teamName = "The Flying Dutchman";
         telemetry.addData("Team Number", teamNumber);
