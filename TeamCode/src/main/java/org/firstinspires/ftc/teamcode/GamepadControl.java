@@ -2,25 +2,34 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import org.firstinspires.ftc.teamcode.mechanisms.MotorMechanism;
 
 @TeleOp
 public class GamepadControl extends OpMode {
-    DcMotor motor;
+    MotorMechanism mechanism = new MotorMechanism();
 
     @Override
     public void init() {
-        motor = hardwareMap.get(DcMotor.class, "motor");
-        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        telemetry.addData("Status", "Motor Configured");
+        mechanism.init(hardwareMap);
+        telemetry.addData("Status", "Clean OOP Initialized");
     }
 
     @Override
     public void loop() {
-        double speed = gamepad1.left_stick_y;
-        motor.setPower(speed);
-        telemetry.addData("Joystick Stick Y", speed);
-        telemetry.addData("Motor Power Out", motor.getPower());
+        double stick = gamepad1.left_stick_y;
+        boolean buttonPressed = gamepad1.a;
+        double finalSpeed;
+
+        if (buttonPressed) {
+            finalSpeed = stick;
+            telemetry.addData("Speed Mode", "Precision (Squared Input)");
+        } else {
+            finalSpeed = mechanism.devideby2(stick);
+            telemetry.addData("Speed Mode", "Normal (Linear Input)");
+        }
+
+        mechanism.setPower(finalSpeed);
+        telemetry.addData("Raw Stick Y", stick);
+        telemetry.addData("Output Motor Power", finalSpeed);
     }
 }
