@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class DriveMechanism {
@@ -13,6 +16,7 @@ public class DriveMechanism {
     private Servo servo;
     private DigitalChannel touchSensor;
     //private DistanceSensor distanceSensor;
+    private IMU imu;
 
     public void init(HardwareMap hwMap) {
         LeftMotor = hwMap.get(DcMotor.class, "left_motor");
@@ -39,6 +43,15 @@ public class DriveMechanism {
         touchSensor.setMode(DigitalChannel.Mode.INPUT);
 
         //distanceSensor = hwMap.get(DistanceSensor.class, "distance_sensor");
+
+        imu = hwMap.get(IMU.class, "imu");
+
+        RevHubOrientationOnRobot revOrientation = new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
+        );
+
+        imu.initialize(new IMU.Parameters(revOrientation));
     }
 
     public void drive(double throttle, double spin) {
@@ -73,4 +86,8 @@ public class DriveMechanism {
         return distanceSensor.getDistance(DistanceUnit.CM);
     }
      */
+
+    public double getHeading() {
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
+    }
 }
