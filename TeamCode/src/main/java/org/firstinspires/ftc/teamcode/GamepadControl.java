@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp
 public class GamepadControl extends OpMode {
     DcMotor motor;
-    double TicksPerRev;
 
     @Override
     public void init() {
