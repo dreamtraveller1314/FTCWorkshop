@@ -90,4 +90,40 @@ public class DriveMechanism {
     public double getHeading() {
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
     }
+
+    public void resetEncoders() {
+        LeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public void setTargetPosition(int leftTarget, int rightTarget) {
+        LeftMotor.setTargetPosition(leftTarget);
+        RightMotor.setTargetPosition(rightTarget);
+    }
+
+    public void setRunMode(DcMotor.RunMode mode) {
+        LeftMotor.setMode(mode);
+        RightMotor.setMode(mode);
+    }
+
+    public void setMotorPowers(double leftPower, double rightPower) {
+        LeftMotor.setPower(leftPower);
+        RightMotor.setPower(rightPower);
+    }
+
+    public boolean isBusy() {
+        return LeftMotor.isBusy() && RightMotor.isBusy();
+    }
+
+    public int getLeftEncoderPosition() {
+        return LeftMotor.getCurrentPosition();
+    }
+
+    public int getRightEncoderPosition() {
+        return RightMotor.getCurrentPosition();
+    }
+
+    public void resetHeading() {
+        imu.resetYaw();
+    }
 }
