@@ -18,6 +18,13 @@ public class HelloWorld extends OpMode {
         telemetry.addData("motor speed", motorSpeed);
         telemetry.addData("claw closed", clawClosed);
         telemetry.addData("Name", teamName);
+        if (motorSpeed >0) {
+            telemetry.addData("Motor Direction", "Forward");
+        }
+        else if (motorSpeed < 0 ) {
+            telemetry.addData("Motor Direction", "Backward");
+        } else {
+            telemetry.addData("Motor Direction", "0");}
     }
 
     @Override
