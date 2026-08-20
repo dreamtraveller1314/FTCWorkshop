@@ -1,13 +1,18 @@
 package org.firstinspires.ftc.teamcode.mechanisms;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class DriveMechanism {
     private DcMotor LeftMotor, RightMotor; //frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor;
     private Servo servo;
-
+    private DigitalChannel touchSensor;
+    //private DistanceSensor distanceSensor;
 
     public void init(HardwareMap hwMap) {
         LeftMotor = hwMap.get(DcMotor.class, "left_motor");
@@ -29,6 +34,11 @@ public class DriveMechanism {
         //backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         servo = hwMap.get(Servo.class, "claw_servo");
+
+        touchSensor = hwMap.get(DigitalChannel.class, "touch_sensor");
+        touchSensor.setMode(DigitalChannel.Mode.INPUT);
+
+        //distanceSensor = hwMap.get(DistanceSensor.class, "distance_sensor");
     }
 
     public void drive(double throttle, double spin) {
@@ -53,4 +63,14 @@ public class DriveMechanism {
     public double getServoPosition() {
         return servo.getPosition();
     }
+
+    public boolean isTouchSensorPressed() {
+        return !touchSensor.getState();
+    }
+
+    /*
+    public double distance() {
+        return distanceSensor.getDistance(DistanceUnit.CM);
+    }
+     */
 }

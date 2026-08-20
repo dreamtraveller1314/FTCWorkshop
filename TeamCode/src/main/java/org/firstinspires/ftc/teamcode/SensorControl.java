@@ -6,7 +6,8 @@ import org.firstinspires.ftc.teamcode.mechanisms.DriveMechanism;
 
 @TeleOp
 public class SensorControl extends OpMode {
-    DriveMechanism robot = new DriveMechanism();
+
+    private DriveMechanism robot = new DriveMechanism();
 
     @Override
     public void init() {
@@ -15,11 +16,20 @@ public class SensorControl extends OpMode {
 
     @Override
     public void loop() {
-        if (gamepad1.x) {
-            robot.setServoPosition(0.0);
-        } else if (gamepad1.y) {
+        boolean isSensorPressed = robot.isTouchSensorPressed();
+        if (isSensorPressed == true){
+            robot.setServoPosition(1.0);
+        }else{
             robot.setServoPosition(0.5);
         }
+
+        /*double distance = robot.distance();
+        if (distance<10){
+            robot.setServoPosition(1.0);
+        }else {
+            robot.setServoPosition(0.5);
+        }
+        */
 
         telemetry.addData("Servo Position", robot.getServoPosition());
     }
