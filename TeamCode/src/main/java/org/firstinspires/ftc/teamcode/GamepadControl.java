@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @TeleOp
 public class GamepadControl extends OpMode {
     DcMotor motor;
+    double TicksPerRev;
 
     @Override
     public void init() {
@@ -18,7 +19,9 @@ public class GamepadControl extends OpMode {
 
     @Override
     public void loop() {
-        motor.setPower(0.5);
-        telemetry.addData("Status", "Motor Spinning at 0.5");
+        double speed = gamepad1.left_stick_y;
+        motor.setPower(speed);
+        telemetry.addData("Joystick Stick Y", speed);
+        telemetry.addData("Motor Power Out", motor.getPower());
     }
 }
