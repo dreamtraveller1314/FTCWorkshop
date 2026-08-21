@@ -1,9 +1,7 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Module2_3_1;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-
 import org.firstinspires.ftc.teamcode.mechanisms.MotorMechanism;
 
 @TeleOp
@@ -13,7 +11,6 @@ public class GamepadControl extends OpMode {
     @Override
     public void init() {
         mechanism.init(hardwareMap);
-        telemetry.addData("Status", "Clean OOP Initialized");
     }
 
     @Override
@@ -28,11 +25,6 @@ public class GamepadControl extends OpMode {
         } else {
             finalSpeed = mechanism.devideby2(stick);
             telemetry.addData("Speed Mode", "Normal (Linear Input)");
-        }
-        if (gamepad1.x) {
-            mechanism.setZeroBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }else if(gamepad1.y){
-            mechanism.setZeroBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
 
         mechanism.setPower(finalSpeed);
