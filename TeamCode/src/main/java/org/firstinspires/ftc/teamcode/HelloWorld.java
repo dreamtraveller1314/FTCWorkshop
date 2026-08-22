@@ -19,13 +19,12 @@ public class HelloWorld extends OpMode {
         telemetry.addData ("Team Name", teamName);
         if (motorSpeed>0){
             telemetry.addData ("Motor Direction", "Forward");
-        } else-if(motorSpeed<0){
+        } else if(motorSpeed<0){
             telemetry.addData ("Motor Direction", "Backward");
         }else{
             telemetry.addData ("Motor Direction", "Stop");
         }
-    }//dont forget to add motordirection variable
+    }
     public void loop(){
-
     }
 }
