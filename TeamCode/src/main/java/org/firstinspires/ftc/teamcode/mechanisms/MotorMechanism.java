@@ -5,22 +5,18 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class MotorMechanism {
     private DcMotor motor;
-    public void init(HardwareMap hwMap) {
-        motor = hwMap.get(DcMotor.class, "motor"); //left_motor/right_motor
+    public void init(HardwareMap hwMap){
+        motor = hwMap.get(DcMotor.class, "motor"); // name you configure in driver hub
         motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void setPower(double speed) {
+    public void setPower(double speed){
         motor.setPower(speed);
     }
 
-    public double devideby2(double input) {
+    public double devideby2 (double input){
         double output = input/2;
         return output;
-    }
-
-    public void setZeroBehavior (DcMotor.ZeroPowerBehavior zerobehavior){
-        motor.setZeroPowerBehavior(zerobehavior);
     }
 }

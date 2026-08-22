@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode.mechanisms;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -19,7 +19,7 @@ public class DriveMechanism {
     private IMU imu;
 
     public void init(HardwareMap hwMap) {
-        LeftMotor = hwMap.get(DcMotor.class, "left_motor");
+        LeftMotor = hwMap.get(DcMotor.class, "left_motor"); //driver hub configure
         RightMotor = hwMap.get(DcMotor.class, "right_motor");
         //backLeftMotor = hwMap.get(DcMotor.class, "back_left_motor");
         //backRightMotor = hwMap.get(DcMotor.class, "back_right_motor");
@@ -37,20 +37,15 @@ public class DriveMechanism {
         //backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        servo = hwMap.get(Servo.class, "claw_servo");
-
-        touchSensor = hwMap.get(DigitalChannel.class, "touch_sensor");
+        servo = hwMap.get(Servo.class, "servo"); //depends on the driver hub configure name
+        touchSensor = hwMap.get(DigitalChannel.class , "touch_sensor");
         touchSensor.setMode(DigitalChannel.Mode.INPUT);
-
         //distanceSensor = hwMap.get(DistanceSensor.class, "distance_sensor");
 
         imu = hwMap.get(IMU.class, "imu");
-
         RevHubOrientationOnRobot revOrientation = new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD
-        );
-
+                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD);
         imu.initialize(new IMU.Parameters(revOrientation));
     }
 
@@ -69,61 +64,23 @@ public class DriveMechanism {
         //backRightMotor.setPower(rightPower);
     }
 
-    public void setServoPosition(double position) {
+    public void setServoPosition (double position){
         servo.setPosition(position);
     }
 
-    public double getServoPosition() {
+    public double getServoPosition (){
         return servo.getPosition();
     }
 
-    public boolean isTouchSensorPressed() {
+    public boolean touchSensorpressed(){
         return !touchSensor.getState();
     }
 
-    /*
-    public double distance() {
+    /*public double distance(){
         return distanceSensor.getDistance(DistanceUnit.CM);
-    }
-     */
+    }*/
 
-    public double getHeading() {
+    public double getHeading(){
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
-    }
-
-    public void resetEncoders() {
-        LeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    public void setTargetPosition(int leftTarget, int rightTarget) {
-        LeftMotor.setTargetPosition(leftTarget);
-        RightMotor.setTargetPosition(rightTarget);
-    }
-
-    public void setRunMode(DcMotor.RunMode mode) {
-        LeftMotor.setMode(mode);
-        RightMotor.setMode(mode);
-    }
-
-    public void setMotorPowers(double leftPower, double rightPower) {
-        LeftMotor.setPower(leftPower);
-        RightMotor.setPower(rightPower);
-    }
-
-    public boolean isBusy() {
-        return LeftMotor.isBusy() && RightMotor.isBusy();
-    }
-
-    public int getLeftEncoderPosition() {
-        return LeftMotor.getCurrentPosition();
-    }
-
-    public int getRightEncoderPosition() {
-        return RightMotor.getCurrentPosition();
-    }
-
-    public void resetHeading() {
-        imu.resetYaw();
     }
 }
